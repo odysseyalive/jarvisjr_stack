@@ -13,12 +13,15 @@ Before making any changes to this project, review the documentation in the `docs
 - **Load only relevant files** based on your current task context
 - **Follow index guidance** to determine which specific files to reference
 
-### File Size Requirements
+### File Size Monitoring
 
-- **Index files**: No size limit (they're just navigation)
-- **Subdirectory files**: MUST be 10k-12k characters maximum
-- **Always check file size** before and after creating/editing content
-- **Split content** if it would exceed 12k characters
+- **Check file sizes first**: Before working with any docs file, check if it exceeds 12k characters
+- **Proactive optimization**: If a file is too large, suggest optimization before proceeding with the user's request
+- **Explain the benefit**: Make clear that optimization will improve context efficiency for the current task
+- **User choice**: Always wait for approval before optimizing
+- **Workflow protection**: Prevent context issues by addressing size problems upfront
+
+Example: "I see you want to update deployment-process.md, but it's currently 15k characters. Should I optimize it into focused subdirectories first? This will help me work with it more effectively and give you better results."
 
 ## Documentation Optimization
 
@@ -126,4 +129,3 @@ All documentation should:
 ## Priority
 
 Documentation guidelines take precedence over general coding practices when conflicts arise. Keep documentation current, comprehensive, and properly sized - it's a core project responsibility, not an afterthought.
-

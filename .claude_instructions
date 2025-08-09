@@ -1,0 +1,61 @@
+# Claude Code Instructions
+
+## Project Documentation
+Before making any changes to this project, review the documentation in the `docs/` directory. Use the filenames to determine which guidelines and principles apply to your current task.
+
+## Key Documentation Files
+- Review files that match your current work context
+- File names indicate their scope and applicability
+- Follow the principles and guidelines outlined in relevant docs
+- Maintain consistency with established patterns
+
+## Proactive Documentation Management
+
+### Required Actions
+When working on this project, you MUST:
+
+1. **Update Existing Documentation**: If your changes affect existing processes, update the relevant docs immediately
+2. **Create New Documentation**: If you identify gaps or new patterns, create appropriate documentation files
+3. **Maintain Documentation Quality**: Ensure all docs remain current, accurate, and helpful
+
+### Documentation Triggers
+Automatically create or update documentation when you:
+
+- **Add new scripts or modules** → Update `bash-script-guidelines.md`
+- **Identify performance issues** → Create/update performance analysis docs
+- **Encounter bugs or failures** → Add to `troubleshooting.md`
+- **Implement new testing patterns** → Update `testing-standards.md`
+- **Change deployment processes** → Update `deployment-process.md`
+- **Establish new coding patterns** → Update `code-review-checklist.md`
+- **Modify git workflows** → Update `git-workflow.md`
+- **Change configuration patterns** → Update `configuration-management.md`
+
+### Documentation Creation Guidelines
+Create new documentation files for:
+
+- **Performance benchmarks** → `performance-benchmarks.md`
+- **Security protocols** → `security-guidelines.md` 
+- **API documentation** → `api-reference.md`
+- **Monitoring setup** → `monitoring-setup.md`
+- **Backup procedures** → `backup-recovery.md`
+- **Environment setup** → `environment-setup.md`
+- **Common patterns** → `development-patterns.md`
+- **Project architecture** → `architecture-overview.md`
+
+### Documentation Standards
+All documentation must:
+- Include creation/modification dates
+- Follow consistent markdown formatting
+- Provide practical examples
+- Include troubleshooting sections where relevant
+- Reference related documentation files
+
+## General Workflow
+1. Check `docs/` for relevant guidelines before starting
+2. Apply appropriate principles based on file naming and content
+3. Follow established project structure and conventions
+4. **Proactively update or create documentation as needed**
+5. Maintain documentation standards throughout development
+
+## Priority
+Documentation guidelines take precedence over general coding practices when conflicts arise. Keep documentation current and comprehensive - it's a core project responsibility, not an afterthought.

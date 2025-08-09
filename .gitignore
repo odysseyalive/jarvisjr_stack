@@ -1,0 +1,99 @@
+# Claude Code
+.claude
+CLAUDE.md
+
+# Claude Flow generated files
+.claude-flow/
+.mcp.json
+claude-flow.config.json
+.swarm/
+.hive-mind/
+memory/
+coordination/memory_bank/*
+coordination/subtasks/*
+coordination/orchestration/*
+*.db
+*.db-journal
+*.db-wal
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+claude-flow
+claude-flow.bat
+claude-flow.ps1
+hive-mind-prompt-*.txt
+.roo
+.roomodes
+
+# JarvisJR Stack script execution artifacts
+setup-*.log
+jj_production_stack.log
+/tmp/setup-logs/
+
+# Backup and temporary files created by script
+backups/
+*.backup
+*.tmp
+temp/
+
+# SSL certificates and secrets (if accidentally created in project root)
+*.pem
+*.key
+*.crt
+*.csr
+secrets/
+certs/
+ssl/
+
+# Docker and container artifacts
+docker-compose.override.yml
+.env
+.env.*
+
+# Service data directories (if created in project root instead of /home/service-user)
+data/
+logs/
+uploads/
+nginx/
+supabase/
+n8n/
+postgres/
+
+# System generated files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Node.js (for any sites developed in project root)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn/
+dist/
+build/
+.next/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Local configuration overrides
+local.config
+*.local
+
+# Any test or development deployments in project root
+test-deployment/
+dev-stack/
+*.log

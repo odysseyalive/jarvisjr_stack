@@ -33,6 +33,9 @@ local.config
 .claude
 CLAUDE.md
 
+# Serena MCP (coding agent toolkit)
+.serena/
+
 # Claude Flow generated files
 .claude-flow/
 .mcp.json

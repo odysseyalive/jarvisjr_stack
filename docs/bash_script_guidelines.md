@@ -19,10 +19,11 @@ project-root/
 ```
 
 ### Configuration System
-- **jstack.default**: Contains all default values, shipped with project
-- **jstack.config**: User-created configuration file (required for operation)
-- **Configuration precedence**: jstack.config overrides jstack.default
-- **Git management**: jstack.default is tracked, jstack.config is ignored
+- **jstack.config.default**: Contains all default values, shipped with project (tracked in git)
+- **jstack.config**: User-created copy of jstack.config.default (required for operation, ignored by git)
+- **User workflow**: Copy jstack.config.default to jstack.config, then customize DOMAIN and EMAIL
+- **Configuration precedence**: jstack.config overrides jstack.config.default values
+- **Loading order**: Script loads defaults first, then applies user overrides from jstack.config
 
 ### File Naming Conventions
 - **Main script**: `jstack.sh` (project entry point)

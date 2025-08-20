@@ -1,0 +1,1823 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1440"
+   height="890"
+   version="1.1"
+   id="svg154"
+   sodipodi:docname="jstack-data-flow-analysis.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview154"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.97865169"
+     inkscape:cx="719.86797"
+     inkscape:cy="336.68772"
+     inkscape:window-width="2752"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="container-state-flow" />
+  <!-- Mathematical grid background -->
+  <defs
+     id="defs9">
+    <pattern
+       id="grid8"
+       width="8"
+       height="8"
+       patternUnits="userSpaceOnUse">
+      <path
+         d="M 8 0 L 0 0 0 8"
+         fill="none"
+         stroke="#f5f5f5"
+         stroke-width="0.5"
+         id="path1" />
+    </pattern>
+    <!-- Arrow markers for different flow types -->
+    <marker
+       id="config-flow"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#9c27b0"
+         id="polygon1" />
+    </marker>
+    <marker
+       id="data-transform"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#ff9800"
+         id="polygon2" />
+    </marker>
+    <marker
+       id="error-flow"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#f44336"
+         id="polygon3" />
+    </marker>
+    <marker
+       id="validation-flow"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#4caf50"
+         id="polygon4" />
+    </marker>
+    <!-- Gradients for variable states -->
+    <linearGradient
+       id="var-birth"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="0%">
+      <stop
+         offset="0%"
+         style="stop-color:#e8f5e8;stop-opacity:1"
+         id="stop4" />
+      <stop
+         offset="100%"
+         style="stop-color:#c8e6c9;stop-opacity:1"
+         id="stop5" />
+    </linearGradient>
+    <linearGradient
+       id="var-transform"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="0%">
+      <stop
+         offset="0%"
+         style="stop-color:#fff3e0;stop-opacity:1"
+         id="stop6" />
+      <stop
+         offset="100%"
+         style="stop-color:#ffcc02;stop-opacity:1"
+         id="stop7" />
+    </linearGradient>
+    <linearGradient
+       id="var-death"
+       x1="0%"
+       y1="0%"
+       x2="100%"
+       y2="0%">
+      <stop
+         offset="0%"
+         style="stop-color:#ffebee;stop-opacity:1"
+         id="stop8" />
+      <stop
+         offset="100%"
+         style="stop-color:#ffcdd2;stop-opacity:1"
+         id="stop9" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#var-transform"
+       id="linearGradient291"
+       x1="180.5"
+       y1="32.5"
+       x2="225.5"
+       y2="32.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#var-birth"
+       id="linearGradient292"
+       x1="70.5"
+       y1="32.5"
+       x2="115.5"
+       y2="32.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#var-transform"
+       id="linearGradient293"
+       x1="180.5"
+       y1="32.5"
+       x2="225.5"
+       y2="32.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#var-birth"
+       id="linearGradient294"
+       x1="70.5"
+       y1="59.5"
+       x2="115.5"
+       y2="59.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#var-transform"
+       id="linearGradient295"
+       x1="180.5"
+       y1="59.5"
+       x2="225.5"
+       y2="59.5"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <rect
+     width="100%"
+     height="100%"
+     fill="url(#grid8)"
+     id="rect9" />
+  <!-- Title -->
+  <text
+     x="720"
+     y="34"
+     font-family="Arial, sans-serif"
+     font-size="34"
+     text-anchor="middle"
+     font-weight="bold"
+     fill="#1565c0"
+     id="text9">
+    JarvisJR Stack - Data Flow  Variable Lifecycle Analysis
+  </text>
+  <text
+     x="720"
+     y="55"
+     font-family="Arial, sans-serif"
+     font-size="13"
+     text-anchor="middle"
+     fill="#424242"
+     id="text10">
+    Complete mapping of variable births, transformations, and data flow patterns
+  </text>
+  <!-- Legend -->
+  <g
+     id="legend"
+     transform="translate(89, 89)">
+    <rect
+       x="0"
+       y="0"
+       width="1262"
+       height="89"
+       fill="#fafafa"
+       stroke="#e0e0e0"
+       stroke-width="1"
+       rx="5"
+       id="rect10" />
+    <text
+       x="13"
+       y="21"
+       font-family="Arial, sans-serif"
+       font-size="16"
+       font-weight="bold"
+       id="text11">Data Flow Legend</text>
+    <!-- Variable lifecycle states -->
+    <circle
+       cx="23"
+       cy="42"
+       r="10"
+       fill="url(#var-birth)"
+       stroke="#4caf50"
+       stroke-width="2"
+       id="circle11" />
+    <text
+       x="42"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text12">Variable Birth</text>
+    <circle
+       cx="154"
+       cy="42"
+       r="10"
+       fill="url(#var-transform)"
+       stroke="#ff9800"
+       stroke-width="2"
+       id="circle12" />
+    <text
+       x="173"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text13">Data Transform</text>
+    <circle
+       cx="285"
+       cy="42"
+       r="10"
+       fill="#fce4ec"
+       stroke="#e91e63"
+       stroke-width="2"
+       id="circle13" />
+    <text
+       x="304"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text14">Validation Point</text>
+    <circle
+       cx="416"
+       cy="42"
+       r="10"
+       fill="url(#var-death)"
+       stroke="#f44336"
+       stroke-width="2"
+       id="circle14" />
+    <text
+       x="435"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text15">Variable Death/Cleanup</text>
+    <!-- Flow types -->
+    <line
+       x1="567"
+       y1="42"
+       x2="610"
+       y2="42"
+       stroke="#9c27b0"
+       stroke-width="3"
+       marker-end="url(#config-flow)"
+       id="line15" />
+    <text
+       x="620"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text16">Config Flow</text>
+    <line
+       x1="732"
+       y1="42"
+       x2="775"
+       y2="42"
+       stroke="#ff9800"
+       stroke-width="3"
+       marker-end="url(#data-transform)"
+       id="line16" />
+    <text
+       x="785"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text17">Data Transform</text>
+    <line
+       x1="897"
+       y1="42"
+       x2="940"
+       y2="42"
+       stroke="#4caf50"
+       stroke-width="3"
+       marker-end="url(#validation-flow)"
+       id="line17" />
+    <text
+       x="950"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text18">Validation</text>
+    <line
+       x1="1062"
+       y1="42"
+       x2="1105"
+       y2="42"
+       stroke="#f44336"
+       stroke-width="3"
+       marker-end="url(#error-flow)"
+       id="line18" />
+    <text
+       x="1115"
+       y="46"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text19">Error Flow</text>
+    <!-- Data persistence indicators -->
+    <rect
+       x="13"
+       y="63"
+       width="21"
+       height="13"
+       fill="#e1f5fe"
+       stroke="#0277bd"
+       rx="2"
+       id="rect19" />
+    <text
+       x="42"
+       y="72"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text20">Environment Variable</text>
+    <rect
+       x="180"
+       y="63"
+       width="21"
+       height="13"
+       fill="#f3e5f5"
+       stroke="#7b1fa2"
+       rx="2"
+       id="rect20" />
+    <text
+       x="209"
+       y="72"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text21">Configuration File</text>
+    <rect
+       x="347"
+       y="63"
+       width="21"
+       height="13"
+       fill="#fff8e1"
+       stroke="#f57c00"
+       rx="2"
+       id="rect21" />
+    <text
+       x="376"
+       y="72"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text22">Runtime Secret</text>
+    <rect
+       x="493"
+       y="63"
+       width="21"
+       height="13"
+       fill="#e8f5e8"
+       stroke="#2e7d32"
+       rx="2"
+       id="rect22" />
+    <text
+       x="522"
+       y="72"
+       font-family="Arial, sans-serif"
+       font-size="11"
+       id="text23">Container State</text>
+  </g>
+  <!-- Configuration Variable Lifecycle Map -->
+  <g
+     id="config-lifecycle"
+     transform="translate(89, 199)">
+    <rect
+       x="0"
+       y="0"
+       width="1262"
+       height="144"
+       fill="#f3e5f5"
+       stroke="#7b1fa2"
+       stroke-width="2"
+       rx="5"
+       id="rect23" />
+    <text
+       x="13"
+       y="21"
+       font-family="Arial, sans-serif"
+       font-size="16"
+       font-weight="bold"
+       fill="#6a1b9a"
+       id="text24">
+      Configuration Variable Lifecycle Flow
+    </text>
+    <!-- Stage 1: Configuration File Reading -->
+    <g
+       id="config-birth"
+       transform="translate(-22.479908)">
+      <circle
+         cx="93"
+         cy="55"
+         r="21"
+         fill="url(#var-birth)"
+         stroke="#4caf50"
+         stroke-width="3"
+         id="circle24"
+         style="fill:url(#linearGradient292)" />
+      <text
+         x="83"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text25">Birth</text>
+      <text
+         x="34"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text26">jstack.config.default</text>
+      <text
+         x="34"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text27">• DOMAIN=&quot;test.example.com&quot;</text>
+      <text
+         x="34"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text28">• EMAIL=&quot;admin@test.example.com&quot;</text>
+      <text
+         x="34"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text29">• SERVICE_USER=&quot;jarvis&quot;</text>
+      <text
+         x="34"
+         y="135"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text30">• BASE_DIR=&quot;/home/jarvis/jarvis-stack&quot;</text>
+    </g>
+    <!-- Flow to user config -->
+    <path
+       d="m 150.7853,56.021814 h 68"
+       stroke="#9c27b0"
+       stroke-width="3"
+       marker-end="url(#config-flow)"
+       fill="none"
+       id="path30" />
+    <text
+       x="171.78531"
+       y="46.021812"
+       font-family="Arial, sans-serif"
+       font-size="9px"
+       fill="#9c27b0"
+       id="text31">source</text>
+    <!-- Stage 2: User Override -->
+    <g
+       id="config-override"
+       transform="translate(36.785304,1.021814)">
+      <circle
+         cx="203"
+         cy="55"
+         r="21"
+         fill="url(#var-transform)"
+         stroke="#ff9800"
+         stroke-width="3"
+         id="circle31"
+         style="fill:url(#linearGradient291)" />
+      <text
+         x="190"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text32">Override</text>
+      <text
+         x="144"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text33">jstack.config</text>
+      <text
+         x="144"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text34">• DOMAIN=&quot;mydomain.com&quot;</text>
+      <text
+         x="144"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text35">• EMAIL=&quot;admin@mydomain.com&quot;</text>
+      <text
+         x="144"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text36">(other values inherited)</text>
+    </g>
+    <!-- Flow to validation -->
+    <path
+       d="m 289.3961,55 h 68"
+       stroke="#4caf50"
+       stroke-width="3"
+       marker-end="url(#validation-flow)"
+       fill="none"
+       id="path36" />
+    <text
+       x="310.39609"
+       y="45"
+       font-family="Arial, sans-serif"
+       font-size="9px"
+       fill="#4caf50"
+       id="text37">validate</text>
+    <!-- Stage 3: Validation -->
+    <g
+       id="config-validation"
+       transform="translate(65.396096)">
+      <circle
+         cx="313"
+         cy="55"
+         r="21"
+         fill="#fce4ec"
+         stroke="#e91e63"
+         stroke-width="3"
+         id="circle37" />
+      <text
+         x="298"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text38">Validate</text>
+      <text
+         x="254"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text39">validate_required_config()</text>
+      <text
+         x="254"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text40">• Check DOMAIN != &quot;example.com&quot;</text>
+      <text
+         x="254"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text41">• Check EMAIL format</text>
+      <text
+         x="254"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text42">• Validate subdomain formats</text>
+    </g>
+    <!-- Flow to export -->
+    <path
+       d="m 444.35591,55 h 68"
+       stroke="#9c27b0"
+       stroke-width="3"
+       marker-end="url(#config-flow)"
+       fill="none"
+       id="path42" />
+    <text
+       x="465.35593"
+       y="45"
+       font-family="Arial, sans-serif"
+       font-size="9px"
+       fill="#9c27b0"
+       id="text43">export</text>
+    <!-- Stage 4: Environment Export -->
+    <g
+       id="config-export"
+       transform="translate(110.35591)">
+      <circle
+         cx="423"
+         cy="55"
+         r="21"
+         fill="#e1f5fe"
+         stroke="#0277bd"
+         stroke-width="3"
+         id="circle43" />
+      <text
+         x="411"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text44">Export</text>
+      <text
+         x="364"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text45">export_config()</text>
+      <text
+         x="364"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text46">• export DOMAIN EMAIL</text>
+      <text
+         x="364"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text47">• export SERVICE_USER BASE_DIR</text>
+      <text
+         x="364"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text48">• All 50+ variables to env</text>
+    </g>
+    <!-- Flow to propagation -->
+    <path
+       d="M 554.35591,55 H 1200.4362"
+       stroke="#9c27b0"
+       stroke-width="2.77334"
+       marker-end="url(#config-flow)"
+       fill="none"
+       id="path48" />
+    <text
+       x="800"
+       y="45"
+       font-family="Arial, sans-serif"
+       font-size="9"
+       fill="#9c27b0"
+       id="text49">propagate to all modules</text>
+    <!-- Stage 5: Module Consumption -->
+    <g
+       id="config-consumption">
+      <rect
+         x="1146"
+         y="34"
+         width="89"
+         height="42"
+         fill="#e8f5e8"
+         stroke="#2e7d32"
+         rx="3"
+         id="rect49" />
+      <text
+         x="1153"
+         y="47"
+         font-family="Arial, sans-serif"
+         font-size="10"
+         fill="#2e7d32"
+         font-weight="bold"
+         id="text50">All Modules</text>
+      <text
+         x="1153"
+         y="58"
+         font-family="Arial, sans-serif"
+         font-size="8"
+         fill="#2e7d32"
+         id="text51">Access via $VAR</text>
+      <text
+         x="1153"
+         y="69"
+         font-family="Arial, sans-serif"
+         font-size="8"
+         fill="#2e7d32"
+         id="text52">No parsing needed</text>
+    </g>
+  </g>
+  <!-- Container Secret Generation Lifecycle -->
+  <g
+     id="secret-lifecycle"
+     transform="translate(89, 364)">
+    <rect
+       x="0"
+       y="0"
+       width="1262"
+       height="144"
+       fill="#fff8e1"
+       stroke="#f57c00"
+       stroke-width="2"
+       rx="5"
+       id="rect52" />
+    <text
+       x="13"
+       y="21"
+       font-family="Arial, sans-serif"
+       font-size="16"
+       font-weight="bold"
+       fill="#ef6c00"
+       id="text53">
+      Container Secret Generation  Transformation Flow
+    </text>
+    <!-- Secret generation -->
+    <g
+       id="secret-birth">
+      <circle
+         cx="93"
+         cy="55"
+         r="21"
+         fill="url(#var-birth)"
+         stroke="#4caf50"
+         stroke-width="3"
+         id="circle53" />
+      <text
+         x="83"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11"
+         font-weight="bold"
+         id="text54">Generate</text>
+      <text
+         x="34"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10"
+         font-weight="bold"
+         id="text55">generate_password()</text>
+      <text
+         x="34"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text56">postgres_password=$(openssl rand...)</text>
+      <text
+         x="34"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text57">jwt_secret=$(generate_secret)</text>
+      <text
+         x="34"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text58">anon_key=$(generate_secret)</text>
+    </g>
+    <!-- Flow to env file -->
+    <path
+       d="m 177.35247,55 h 68"
+       stroke="#ff9800"
+       stroke-width="3"
+       marker-end="url(#data-transform)"
+       fill="none"
+       id="path58" />
+    <!-- Environment file creation -->
+    <g
+       id="env-creation"
+       transform="translate(63.352468)">
+      <circle
+         cx="203"
+         cy="55"
+         r="21"
+         fill="url(#var-transform)"
+         stroke="#ff9800"
+         stroke-width="3"
+         id="circle58"
+         style="fill:url(#linearGradient293)" />
+      <text
+         x="191"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text59">Write Env</text>
+      <text
+         x="144"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text60">/tmp/supabase.env</text>
+      <text
+         x="144"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text61">POSTGRES_PASSWORD=$postgres_password</text>
+      <text
+         x="144"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text62">JWT_SECRET=$jwt_secret</text>
+      <text
+         x="144"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text63">ANON_KEY=$anon_key</text>
+    </g>
+    <!-- Flow to secure storage -->
+    <path
+       d="m 384.4248,55 h 68"
+       stroke="#f44336"
+       stroke-width="3"
+       marker-end="url(#error-flow)"
+       fill="none"
+       id="path63" />
+    <text
+       x="405.4248"
+       y="45"
+       font-family="Arial, sans-serif"
+       font-size="9px"
+       fill="#f44336"
+       id="text64">secure move</text>
+    <!-- Secure storage -->
+    <g
+       id="secure-storage"
+       transform="translate(160.4248)">
+      <circle
+         cx="313"
+         cy="55"
+         r="21"
+         fill="#fff8e1"
+         stroke="#f57c00"
+         stroke-width="3"
+         id="circle64" />
+      <text
+         x="295"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text65">Secure</text>
+      <text
+         x="254"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text66">$BASE_DIR/services/.env</text>
+      <text
+         x="254"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text67">• chmod 600</text>
+      <text
+         x="254"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text68">• chown $SERVICE_USER</text>
+      <text
+         x="254"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text69">• safe_mv() validation</text>
+    </g>
+    <!-- Flow to container -->
+    <path
+       d="m 515.88289,53.978186 h 68"
+       stroke="#2196f3"
+       stroke-width="3"
+       fill="none"
+       id="path69" />
+    <text
+       x="536.88287"
+       y="43.978188"
+       font-family="Arial, sans-serif"
+       font-size="9px"
+       fill="#2196f3"
+       id="text70">docker-compose</text>
+    <!-- Container consumption -->
+    <g
+       id="container-usage"
+       transform="translate(181.88289,-1.021814)">
+      <circle
+         cx="423"
+         cy="55"
+         r="21"
+         fill="#e8f5e8"
+         stroke="#2e7d32"
+         stroke-width="3"
+         id="circle70" />
+      <text
+         x="410"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text71">Container</text>
+      <text
+         x="364"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text72">Docker Container</text>
+      <text
+         x="364"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text73">Environment: ${POSTGRES_PASSWORD}</text>
+      <text
+         x="364"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text74">Runtime access to secrets</text>
+      <text
+         x="364"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text75">Memory-only after start</text>
+    </g>
+    <!-- Death/Cleanup -->
+    <path
+       d="M 645.29736,55 H 1050"
+       stroke="#f44336"
+       stroke-width="1.63441"
+       stroke-dasharray="4, 4"
+       fill="none"
+       id="path75" />
+    <text
+       x="700"
+       y="45"
+       font-family="Arial, sans-serif"
+       font-size="9"
+       fill="#f44336"
+       id="text76">container shutdown → memory cleanup</text>
+    <g
+       id="secret-death">
+      <circle
+         cx="1071"
+         cy="55"
+         r="21"
+         fill="url(#var-death)"
+         stroke="#f44336"
+         stroke-width="3"
+         id="circle76" />
+      <text
+         x="1059"
+         y="59"
+         font-family="Arial, sans-serif"
+         font-size="11"
+         font-weight="bold"
+         id="text77">Cleanup</text>
+      <text
+         x="1012"
+         y="89"
+         font-family="Arial, sans-serif"
+         font-size="10"
+         font-weight="bold"
+         id="text78">Variable Death Points:</text>
+      <text
+         x="1012"
+         y="102"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text79">• Container stop: env vars cleared</text>
+      <text
+         x="1012"
+         y="113"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text80">• File remains for restart</text>
+      <text
+         x="1012"
+         y="124"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text81">• Uninstall: complete removal</text>
+    </g>
+  </g>
+  <!-- Error Handling and Logging Data Flow -->
+  <g
+     id="error-logging-flow"
+     transform="translate(89, 529)">
+    <rect
+       x="0"
+       y="0"
+       width="1262"
+       height="144"
+       fill="#ffebee"
+       stroke="#c62828"
+       stroke-width="2"
+       rx="5"
+       id="rect81" />
+    <text
+       x="13"
+       y="21"
+       font-family="Arial, sans-serif"
+       font-size="16"
+       font-weight="bold"
+       fill="#c62828"
+       id="text82">
+      Error Handling  Logging Data Flow
+    </text>
+    <!-- Error sources -->
+    <g
+       id="error-sources">
+      <rect
+         x="21"
+         y="34"
+         width="144"
+         height="97"
+         fill="#f44336"
+         stroke="#c62828"
+         stroke-width="1"
+         rx="3"
+         id="rect82" />
+      <text
+         x="28"
+         y="47"
+         font-family="Arial, sans-serif"
+         font-size="12"
+         fill="white"
+         font-weight="bold"
+         id="text83">Error Sources</text>
+      <text
+         x="28"
+         y="61"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text84">• Function failures</text>
+      <text
+         x="28"
+         y="73"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text85">• Validation errors</text>
+      <text
+         x="28"
+         y="85"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text86">• Docker command failures</text>
+      <text
+         x="28"
+         y="97"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text87">• Network/DNS issues</text>
+      <text
+         x="28"
+         y="109"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text88">• File system errors</text>
+      <text
+         x="28"
+         y="121"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text89">• User interruption (SIGINT)</text>
+    </g>
+    <!-- Error capture -->
+    <path
+       d="M 165 82 L 230 82"
+       stroke="#f44336"
+       stroke-width="3"
+       marker-end="url(#error-flow)"
+       fill="none"
+       id="path89" />
+    <g
+       id="error-capture">
+      <rect
+         x="231"
+         y="34"
+         width="144"
+         height="97"
+         fill="#ff5722"
+         stroke="#c62828"
+         stroke-width="1"
+         rx="3"
+         id="rect89" />
+      <text
+         x="238"
+         y="47"
+         font-family="Arial, sans-serif"
+         font-size="12"
+         fill="white"
+         font-weight="bold"
+         id="text90">Error Capture</text>
+      <text
+         x="238"
+         y="61"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text91">trap handlers:</text>
+      <text
+         x="238"
+         y="73"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text92">• log_failure_exit</text>
+      <text
+         x="238"
+         y="85"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text93">• log_interrupted_exit</text>
+      <text
+         x="238"
+         y="97"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text94">Functions:</text>
+      <text
+         x="238"
+         y="109"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text95">• safe_execute() wrapper</text>
+      <text
+         x="238"
+         y="121"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#ffebee"
+         id="text96">• log_error() calls</text>
+    </g>
+    <!-- Error processing -->
+    <path
+       d="M 375 82 L 440 82"
+       stroke="#ff9800"
+       stroke-width="3"
+       marker-end="url(#data-transform)"
+       fill="none"
+       id="path96" />
+    <g
+       id="error-processing">
+      <rect
+         x="441"
+         y="34"
+         width="144"
+         height="97"
+         fill="#ff9800"
+         stroke="#f57c00"
+         stroke-width="1"
+         rx="3"
+         id="rect96" />
+      <text
+         x="448"
+         y="47"
+         font-family="Arial, sans-serif"
+         font-size="12"
+         fill="white"
+         font-weight="bold"
+         id="text97">Log Processing</text>
+      <text
+         x="448"
+         y="61"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#fff8e1"
+         id="text98">Logging functions:</text>
+      <text
+         x="448"
+         y="73"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#fff8e1"
+         id="text99">• log_error(message)</text>
+      <text
+         x="448"
+         y="85"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#fff8e1"
+         id="text100">• log_warning(message)</text>
+      <text
+         x="448"
+         y="97"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#fff8e1"
+         id="text101">• log_info(message)</text>
+      <text
+         x="448"
+         y="109"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#fff8e1"
+         id="text102">Format: timestamp + level</text>
+      <text
+         x="448"
+         y="121"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#fff8e1"
+         id="text103">Output: console + file</text>
+    </g>
+    <!-- Log persistence -->
+    <path
+       d="M 585 82 L 650 82"
+       stroke="#4caf50"
+       stroke-width="3"
+       fill="none"
+       id="path103" />
+    <g
+       id="log-persistence">
+      <rect
+         x="651"
+         y="34"
+         width="189"
+         height="97"
+         fill="#4caf50"
+         stroke="#388e3c"
+         stroke-width="1"
+         rx="3"
+         id="rect103" />
+      <text
+         x="658"
+         y="47"
+         font-family="Arial, sans-serif"
+         font-size="12"
+         fill="white"
+         font-weight="bold"
+         id="text104">Log Persistence</text>
+      <text
+         x="658"
+         y="61"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#e8f5e8"
+         id="text105">File: $LOG_DIR/setup_$TIMESTAMP.log</text>
+      <text
+         x="658"
+         y="73"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#e8f5e8"
+         id="text106">Retention: 14 days (configurable)</text>
+      <text
+         x="658"
+         y="85"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#e8f5e8"
+         id="text107">Auto-cleanup: keep last 10 files</text>
+      <text
+         x="658"
+         y="97"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#e8f5e8"
+         id="text108">Variable state:</text>
+      <text
+         x="658"
+         y="109"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#e8f5e8"
+         id="text109">• SETUP_LOG_FILE (birth)</text>
+      <text
+         x="658"
+         y="121"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#e8f5e8"
+         id="text110">• File handle (lifecycle)</text>
+    </g>
+    <!-- Error reporting -->
+    <path
+       d="M 840 82 L 905 82"
+       stroke="#9c27b0"
+       stroke-width="3"
+       fill="none"
+       id="path110" />
+    <g
+       id="error-reporting">
+      <rect
+         x="906"
+         y="34"
+         width="144"
+         height="97"
+         fill="#9c27b0"
+         stroke="#7b1fa2"
+         stroke-width="1"
+         rx="3"
+         id="rect110" />
+      <text
+         x="913"
+         y="47"
+         font-family="Arial, sans-serif"
+         font-size="12"
+         fill="white"
+         font-weight="bold"
+         id="text111">User Feedback</text>
+      <text
+         x="913"
+         y="61"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#f3e5f5"
+         id="text112">Console output:</text>
+      <text
+         x="913"
+         y="73"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#f3e5f5"
+         id="text113">• Color-coded messages</text>
+      <text
+         x="913"
+         y="85"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#f3e5f5"
+         id="text114">• Progress indicators</text>
+      <text
+         x="913"
+         y="97"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#f3e5f5"
+         id="text115">Exit strategy:</text>
+      <text
+         x="913"
+         y="109"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#f3e5f5"
+         id="text116">• Graceful cleanup</text>
+      <text
+         x="913"
+         y="121"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#f3e5f5"
+         id="text117">• Log file location</text>
+    </g>
+    <!-- Variable death on cleanup -->
+    <path
+       d="M 1050 82 L 1115 82"
+       stroke="#f44336"
+       stroke-width="2"
+       stroke-dasharray="4,4"
+       fill="none"
+       id="path117" />
+    <g
+       id="logging-cleanup">
+      <circle
+         cx="1136"
+         cy="82"
+         r="21"
+         fill="url(#var-death)"
+         stroke="#f44336"
+         stroke-width="3"
+         id="circle117" />
+      <text
+         x="1122"
+         y="86"
+         font-family="Arial, sans-serif"
+         font-size="11"
+         font-weight="bold"
+         id="text118">Cleanup</text>
+      <text
+         x="1170"
+         y="70"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text119">Variables cleared:</text>
+      <text
+         x="1170"
+         y="82"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text120">• SETUP_LOG_FILE</text>
+      <text
+         x="1170"
+         y="94"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text121">• PROGRESS_PID</text>
+      <text
+         x="1170"
+         y="106"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text122">Files preserved</text>
+    </g>
+  </g>
+  <!-- Container State Management Flow -->
+  <g
+     id="container-state-flow"
+     transform="translate(89, 694)">
+    <rect
+       x="0"
+       y="0"
+       width="1262"
+       height="144"
+       fill="#e8f5e8"
+       stroke="#2e7d32"
+       stroke-width="2"
+       rx="5"
+       id="rect122" />
+    <text
+       x="13"
+       y="21"
+       font-family="Arial, sans-serif"
+       font-size="16"
+       font-weight="bold"
+       fill="#2e7d32"
+       id="text123">
+      Container State Management  Health Monitoring Flow
+    </text>
+    <!-- Container creation -->
+    <g
+       id="container-creation"
+       transform="translate(-23.501722,-21.458094)">
+      <circle
+         cx="93"
+         cy="82"
+         r="21"
+         fill="url(#var-birth)"
+         stroke="#4caf50"
+         stroke-width="3"
+         id="circle123"
+         style="fill:url(#linearGradient294)" />
+      <text
+         x="81"
+         y="86"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text124">Create</text>
+      <text
+         x="34"
+         y="116"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text125">docker-compose up -d</text>
+      <text
+         x="34"
+         y="129"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text126">Container state: CREATING</text>
+    </g>
+    <!-- Health check loop -->
+    <path
+       d="M 85.389208,83.021814 H 153.38921"
+       stroke="#ff9800"
+       stroke-width="3"
+       marker-end="url(#data-transform)"
+       fill="none"
+       id="path126" />
+    <g
+       id="health-monitoring"
+       transform="translate(-28.610792,1.021814)">
+      <circle
+         cx="203"
+         cy="82"
+         r="21"
+         fill="url(#var-transform)"
+         stroke="#ff9800"
+         stroke-width="3"
+         id="circle126"
+         style="fill:url(#linearGradient295)" />
+      <text
+         x="186"
+         y="86"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text127">Monitor</text>
+      <text
+         x="124"
+         y="116"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text128">wait_for_service_health()</text>
+      <text
+         x="124"
+         y="129"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text129">Polling loop: check health every 5s</text>
+    </g>
+    <!-- Health validation -->
+    <path
+       d="m 198.45465,56.45465 h 68"
+       stroke="#4caf50"
+       stroke-width="3"
+       marker-end="url(#validation-flow)"
+       fill="none"
+       id="path129" />
+    <g
+       id="health-validation"
+       transform="translate(-25.54535,-25.54535)">
+      <circle
+         cx="313"
+         cy="82"
+         r="21"
+         fill="#fce4ec"
+         stroke="#e91e63"
+         stroke-width="3"
+         id="circle129" />
+      <text
+         x="296"
+         y="86"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text130">Validate</text>
+      <text
+         x="234"
+         y="116"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text131">docker ps --filter health=healthy</text>
+      <text
+         x="234"
+         y="129"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text132">State transition: STARTING → HEALTHY</text>
+    </g>
+    <!-- Runtime state -->
+    <path
+       d="m 334,78.934558 h 68"
+       stroke="#4caf50"
+       stroke-width="3"
+       fill="none"
+       id="path132" />
+    <g
+       id="runtime-state"
+       transform="translate(0,-3.065442)">
+      <circle
+         cx="423"
+         cy="82"
+         r="21"
+         fill="#e8f5e8"
+         stroke="#2e7d32"
+         stroke-width="3"
+         id="circle132" />
+      <text
+         x="406"
+         y="86"
+         font-family="Arial, sans-serif"
+         font-size="11px"
+         font-weight="bold"
+         id="text133">Running</text>
+      <text
+         x="344"
+         y="116"
+         font-family="Arial, sans-serif"
+         font-size="10px"
+         font-weight="bold"
+         id="text134">Container operational</text>
+      <text
+         x="344"
+         y="129"
+         font-family="Arial, sans-serif"
+         font-size="9px"
+         id="text135">Health checks continue in background</text>
+    </g>
+    <!-- State variables -->
+    <g
+       id="state-variables"
+       transform="translate(500, 40)">
+      <rect
+         x="0"
+         y="0"
+         width="233"
+         height="89"
+         fill="#f1f8e9"
+         stroke="#689f38"
+         stroke-width="1"
+         rx="3"
+         id="rect135" />
+      <text
+         x="7"
+         y="16"
+         font-family="Arial, sans-serif"
+         font-size="11"
+         font-weight="bold"
+         fill="#33691e"
+         id="text136">Container State Variables:</text>
+      <text
+         x="7"
+         y="30"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#33691e"
+         id="text137">• container_name (birth at compose up)</text>
+      <text
+         x="7"
+         y="42"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#33691e"
+         id="text138">• health_status (transform via checks)</text>
+      <text
+         x="7"
+         y="54"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#33691e"
+         id="text139">• service_ports (exposed to network)</text>
+      <text
+         x="7"
+         y="66"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#33691e"
+         id="text140">• environment_vars (from .env files)</text>
+      <text
+         x="7"
+         y="78"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#33691e"
+         id="text141">• volume_mounts (data persistence)</text>
+    </g>
+    <!-- Service dependencies -->
+    <g
+       id="service-dependencies"
+       transform="translate(755, 40)">
+      <rect
+         x="0"
+         y="0"
+         width="233"
+         height="89"
+         fill="#e3f2fd"
+         stroke="#1976d2"
+         stroke-width="1"
+         rx="3"
+         id="rect141" />
+      <text
+         x="7"
+         y="16"
+         font-family="Arial, sans-serif"
+         font-size="11"
+         font-weight="bold"
+         fill="#0d47a1"
+         id="text142">Dependency Chain Variables:</text>
+      <text
+         x="7"
+         y="30"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#0d47a1"
+         id="text143">• postgres → supabase-auth</text>
+      <text
+         x="7"
+         y="42"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#0d47a1"
+         id="text144">• supabase-auth → supabase-rest</text>
+      <text
+         x="7"
+         y="54"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#0d47a1"
+         id="text145">• all-services → nginx-proxy</text>
+      <text
+         x="7"
+         y="66"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#0d47a1"
+         id="text146">Variable: depends_on conditions</text>
+      <text
+         x="7"
+         y="78"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         fill="#0d47a1"
+         id="text147">Lifecycle: start order enforcement</text>
+    </g>
+    <!-- Container shutdown -->
+    <path
+       d="M 988 82 L 1050 82"
+       stroke="#f44336"
+       stroke-width="2"
+       stroke-dasharray="4,4"
+       fill="none"
+       id="path147" />
+    <text
+       x="1000"
+       y="72"
+       font-family="Arial, sans-serif"
+       font-size="9"
+       fill="#f44336"
+       id="text148">docker-compose down</text>
+    <g
+       id="container-death">
+      <circle
+         cx="1071"
+         cy="82"
+         r="21"
+         fill="url(#var-death)"
+         stroke="#f44336"
+         stroke-width="3"
+         id="circle148" />
+      <text
+         x="1053"
+         y="86"
+         font-family="Arial, sans-serif"
+         font-size="11"
+         font-weight="bold"
+         id="text149">Shutdown</text>
+      <text
+         x="1105"
+         y="70"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text150">Variable cleanup:</text>
+      <text
+         x="1105"
+         y="82"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text151">• Container removed</text>
+      <text
+         x="1105"
+         y="94"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text152">• Network disconnected</text>
+      <text
+         x="1105"
+         y="106"
+         font-family="Arial, sans-serif"
+         font-size="9"
+         id="text153">• Volumes preserved</text>
+    </g>
+  </g>
+  <!-- System-wide Data Flow Summary -->
+  <g
+     id="system-summary"
+     transform="translate(89, 849)">
+    <rect
+       x="0"
+       y="0"
+       width="1262"
+       height="34"
+       fill="url(#dataFlow)"
+       stroke="#1976d2"
+       stroke-width="2"
+       rx="5"
+       id="rect153" />
+    <text
+       x="631"
+       y="23"
+       font-family="Arial, sans-serif"
+       font-size="14"
+       text-anchor="middle"
+       font-weight="bold"
+       fill="#0d47a1"
+       id="text154">
+      System-Wide Variable Flow: Config Birth → Validation Transform → Environment Export → Module Consumption → Container State → Cleanup Death
+    </text>
+  </g>
+</svg>

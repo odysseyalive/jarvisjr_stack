@@ -1,0 +1,105 @@
+{
+  "version": "1.0",
+  "created": "2025-08-20",
+  "updated": "2025-08-20T12:00:00.000Z",
+  "maps": [
+    {
+      "filename": "jstack-function-wire-diagram.svg",
+      "title": "JarvisJR Stack Function Wire Diagram",
+      "description": "Comprehensive mapping of all function calls, command routing, and module relationships in the JarvisJR Stack system",
+      "created": "2025-08-20T12:00:00.000Z",
+      "agent": "compass-data-flow",
+      "type": "function-architecture",
+      "layers": [
+        "Main Entry Point (jstack.sh)",
+        "Configuration System (scripts/settings/)",
+        "Validation System (scripts/lib/validation.sh)",
+        "Common Utilities (scripts/lib/common.sh)", 
+        "Core Modules (scripts/core/)"
+      ],
+      "key_flows": [
+        "CLI argument parsing & routing",
+        "Configuration loading & validation",
+        "Error handling & logging",
+        "Container orchestration"
+      ]
+    },
+    {
+      "filename": "jstack-data-flow-analysis.svg",
+      "title": "JarvisJR Stack Data Flow & Variable Lifecycle Analysis",
+      "description": "Detailed mapping of variable births, transformations, validation points, and cleanup throughout the system lifecycle",
+      "created": "2025-08-20T12:00:00.000Z",
+      "agent": "compass-data-flow",
+      "type": "variable-lifecycle",
+      "flows_analyzed": [
+        "Configuration Variable Lifecycle Flow",
+        "Container Secret Generation & Transformation Flow", 
+        "Error Handling & Logging Data Flow",
+        "Container State Management & Health Monitoring Flow"
+      ],
+      "critical_variables": [
+        "DOMAIN",
+        "EMAIL", 
+        "SERVICE_USER",
+        "BASE_DIR",
+        "SETUP_LOG_FILE",
+        "container secrets"
+      ]
+    },
+    {
+      "filename": "jstack-dependency-patterns.md",
+      "title": "JarvisJR Stack Inter-Module Dependencies & Communication Patterns",
+      "description": "Comprehensive documentation of module dependencies, communication patterns, variable mutation boundaries, and integration safety requirements",
+      "created": "2025-08-20T12:00:00.000Z",
+      "agent": "compass-data-flow",
+      "type": "dependency-documentation",
+      "sections": [
+        "Module Dependency Hierarchy",
+        "Critical Variable Lifecycles",
+        "Inter-Module Communication Patterns",
+        "Data Flow Architecture",
+        "Critical Dependencies & Risk Points",
+        "Variable Mutation Boundaries",
+        "Communication Safety Patterns",
+        "Module Integration Checklist"
+      ]
+    }
+  ],
+  "categories": {
+    "architecture": ["jstack-function-wire-diagram.svg"],
+    "data-flow": ["jstack-data-flow-analysis.svg"],
+    "documentation": ["jstack-dependency-patterns.md"]
+  },
+  "recent_patterns": [
+    {
+      "pattern": "Modular Bash Script Architecture",
+      "description": "Clean separation of concerns with standardized sourcing and configuration patterns",
+      "risk_level": "low",
+      "files_affected": "All scripts"
+    },
+    {
+      "pattern": "Environment Variable Communication", 
+      "description": "Configuration flows through environment variables to all modules",
+      "risk_level": "medium",
+      "mutation_boundaries": ["load_config()", "export_config()"]
+    },
+    {
+      "pattern": "Service User Isolation",
+      "description": "All operations run under dedicated service user for security",
+      "risk_level": "high",
+      "critical_dependency": "$SERVICE_USER must exist before any file operations"
+    },
+    {
+      "pattern": "Container Secret Generation",
+      "description": "Dynamic secret generation with secure file handling",
+      "risk_level": "high", 
+      "lifecycle": "generate → temp file → secure move → container env"
+    }
+  ],
+  "tags": {
+    "high-risk": ["SERVICE_USER", "BASE_DIR", "container-secrets"],
+    "configuration": ["DOMAIN", "EMAIL", "config-validation"],
+    "security": ["secret-generation", "file-permissions", "service-isolation"],
+    "error-handling": ["logging", "progress-tracking", "cleanup"]
+  }
+}

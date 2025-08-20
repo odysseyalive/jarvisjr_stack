@@ -100,6 +100,39 @@ UPDATE_ROLLBACK_ON_FAILURE="true"
 PRE_UPDATE_BACKUP="true"
 IMAGE_CLEANUP_RETENTION="5"
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🤖 BROWSER AUTOMATION CONFIGURATION (Debian 12 Headless)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Chrome/Puppeteer Configuration for Headless Debian 12
+ENABLE_BROWSER_AUTOMATION="${ENABLE_BROWSER_AUTOMATION:-true}"
+CHROME_MEMORY_LIMIT="4G"
+CHROME_CPU_LIMIT="1.5"
+CHROME_SWAP_LIMIT="6G"
+CHROME_MAX_INSTANCES="5"
+CHROME_INSTANCE_TIMEOUT="300"
+CHROME_CACHE_SIZE="1G"
+
+# Debian 12 Chrome Installation
+CHROME_REPOSITORY="https://dl.google.com/linux/chrome/deb/"
+CHROME_PACKAGE="google-chrome-stable"
+CHROME_DEPENDENCIES="fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libdrm2 libxkbcommon0 libxss1 libgconf-2-4 xdg-utils"
+
+# Headless Chrome Security Arguments (SECURE - no --no-sandbox)
+CHROME_SECURITY_ARGS="--disable-dev-shm-usage --disable-gpu --headless=new --disable-extensions --disable-plugins --disable-background-timer-throttling --disable-renderer-backgrounding --disable-default-apps --disable-sync --disable-translate --hide-scrollbars --mute-audio --disable-background-networking"
+
+# Puppeteer Configuration  
+PUPPETEER_CACHE_DIR="/home/${SERVICE_USER}/jarvis-stack/puppeteer"
+PUPPETEER_EXECUTABLE_PATH="/usr/bin/google-chrome"
+PUPPETEER_DOWNLOAD_HOST="https://storage.googleapis.com"
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
+
+# Browser Automation Resource Management
+BROWSER_CLEANUP_INTERVAL="3600"
+BROWSER_LOG_LEVEL="error"
+BROWSER_SCREENSHOT_QUALITY="80"
+BROWSER_PDF_FORMAT="A4"
+
 # N8N CONFIGURATION
 N8N_TIMEZONE="America/Los_Angeles"
 

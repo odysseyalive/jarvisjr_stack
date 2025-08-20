@@ -14,16 +14,16 @@ set -e # Exit on any error
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$SCRIPT_DIR"
 
-# Source configuration and common utilities
-source "${PROJECT_ROOT}/scripts/settings/config.sh"
+# Source common utilities first (config loading will happen after arg parsing)
 source "${PROJECT_ROOT}/scripts/lib/common.sh"
 
-# Load configuration
-load_config
-export_config
-
-# Initialize logging
-setup_logging
+# Function to initialize configuration and logging (called after arg parsing)
+initialize_system() {
+    source "${PROJECT_ROOT}/scripts/settings/config.sh"
+    load_config
+    export_config
+    setup_logging
+}
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 🎯 COMMAND ROUTING FUNCTIONS
@@ -47,12 +47,21 @@ run_installation() {
         return 1
     fi
     
-    # Phase 3: SSL Configuration (placeholder for future module)
+    # Phase 3: SSL Configuration
     log_info "Phase 3: SSL Configuration"
-    log_info "SSL configuration will be implemented in scripts/core/ssl.sh"
+    if ! bash "${PROJECT_ROOT}/scripts/core/ssl.sh" configure; then
+        log_error "SSL configuration failed"
+        return 1
+    fi
     
-    # Phase 4: Final Setup and Health Checks
-    log_info "Phase 4: Final Setup"
+    # Phase 4: Service Orchestration and Final Health Checks
+    log_info "Phase 4: Service Orchestration and Health Validation"
+    if bash "${PROJECT_ROOT}/scripts/core/service_orchestration.sh" start-all; then
+        log_success "All services started and validated successfully"
+    else
+        log_warning "Some services may have issues - check logs for details"
+    fi
+    
     log_success "JarvisJR Stack installation completed successfully!"
     
     # Display access information
@@ -81,9 +90,14 @@ run_uninstallation() {
         exit 0
     fi
     
-    # Will be: bash "${PROJECT_ROOT}/scripts/utils/cleanup.sh"
-    log_info "Uninstallation will be implemented in scripts/utils/cleanup.sh"
-    log_warning "For now, please manually stop containers and clean up"
+    # Execute complete uninstallation
+    if bash "${PROJECT_ROOT}/scripts/utils/cleanup.sh" complete; then
+        log_success "JarvisJR Stack uninstallation completed successfully"
+    else
+        log_error "Uninstallation failed or completed with warnings"
+        log_info "Check logs for details or run manual cleanup if needed"
+        return 1
+    fi
 }
 
 # Backup workflow
@@ -97,8 +111,13 @@ run_backup() {
         log_info "Creating timestamped backup"
     fi
     
-    # Will be: bash "${PROJECT_ROOT}/scripts/core/backup.sh" create "$backup_name"
-    log_info "Backup functionality will be implemented in scripts/core/backup.sh"
+    # Execute backup functionality
+    if bash "${PROJECT_ROOT}/scripts/core/backup.sh" create "$backup_name"; then
+        log_success "System backup completed successfully"
+    else
+        log_error "System backup failed"
+        return 1
+    fi
 }
 
 # Restore workflow  
@@ -112,15 +131,23 @@ run_restore() {
         log_info "Interactive restore mode"
     fi
     
-    # Will be: bash "${PROJECT_ROOT}/scripts/core/backup.sh" restore "$restore_file"
-    log_info "Restore functionality will be implemented in scripts/core/backup.sh"
+    # Execute restore functionality
+    if bash "${PROJECT_ROOT}/scripts/core/backup.sh" restore "$restore_file"; then
+        log_success "System restore completed successfully"
+        log_info "You may need to restart services after restore"
+    else
+        log_error "System restore failed"
+        return 1
+    fi
 }
 
 # SSL configuration workflow
 run_ssl_configuration() {
     log_section "Configuring SSL Certificates"
-    # Will be: bash "${PROJECT_ROOT}/scripts/core/ssl.sh" configure
-    log_info "SSL configuration will be implemented in scripts/core/ssl.sh"
+    if ! bash "${PROJECT_ROOT}/scripts/core/ssl.sh" configure; then
+        log_error "SSL configuration failed"
+        return 1
+    fi
 }
 
 # Site management workflows
@@ -208,7 +235,7 @@ OPTIONS:
   --restore [FILE]   Restore from backup (interactive selection if no file)
   --list-backups     List all available backups with details
   --dry-run          Run in dry-run mode (no actual changes)
-  --configure-ssl    Configure SSL certificates only
+  --configure-ssl    Configure SSL certificates and start NGINX
   --add-site PATH    Add a site from specified path
   --remove-site PATH Remove a site from specified path
   --enable-debug     Enable debug logging
@@ -226,7 +253,7 @@ EXAMPLES:
   $0 --add-site sites/example.com    # Add a site from config
   $0 --remove-site sites/example.com # Remove a site
   $0 --dry-run       # Test run without making changes
-  $0 --configure-ssl # Configure SSL certificates
+  $0 --configure-ssl # Configure SSL certificates and start NGINX
 
 CONFIGURATION:
   Configuration files:
@@ -248,6 +275,19 @@ EOF
 
 # Parse command-line arguments
 main() {
+    # Handle help first (before config loading)
+    for arg in "$@"; do
+        case $arg in
+            --help|-h)
+                show_usage
+                exit 0
+                ;;
+        esac
+    done
+    
+    # Initialize system configuration and logging
+    initialize_system
+    
     # Set up signal handlers
     trap 'log_interrupted_exit' INT TERM
     trap 'log_failure_exit $LINENO $? "$BASH_COMMAND"' ERR
@@ -324,10 +364,6 @@ main() {
                 export ENABLE_DEBUG_LOGS="true"
                 log_info "Debug logging enabled"
                 shift
-                ;;
-            --help | -h)
-                show_usage
-                exit 0
                 ;;
             *)
                 echo "Unknown option: $1"

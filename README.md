@@ -320,22 +320,42 @@ All subdomains should return your server's IP address.
 
 ### Step 4: Download Installation Script
 
-**Download Latest Version**
+**Recommended: Secure Sync System (Preferred Method)**
+
+The JarvisJR Stack includes a secure sync system that downloads and manages all required files while maintaining the modular architecture:
+
 ```bash
-# Method 1: Direct download from GitHub
+# Download main orchestrator and sync all components
+curl -fsSL https://raw.githubusercontent.com/odysseyalive/jarvisjr_stack/main/jstack.sh -o jstack.sh
+chmod +x jstack.sh
+
+# Download all required scripts and components securely
+./jstack.sh --sync
+```
+
+**Alternative: Manual Download Methods**
+
+```bash
+# Method 1: Direct download from GitHub (single file only)
 curl -fsSL -H "Cache-Control: no-cache" \
-  "https://raw.githubusercontent.com/your-username/JarvisJR_Stack/main/jstack.sh?$(date +%s)" \
+  "https://raw.githubusercontent.com/odysseyalive/jarvisjr_stack/main/jstack.sh?$(date +%s)" \
   -o jstack.sh
 
 # Method 2: Clone repository (recommended for development)
-git clone https://github.com/your-username/JarvisJR_Stack.git
-cd JarvisJR_Stack
+git clone https://github.com/odysseyalive/jarvisjr_stack.git
+cd jarvisjr_stack
 chmod +x jstack.sh
 ```
 
-> **Note**: Replace `your-username` with the actual GitHub username/organization where the repository is hosted.
+**Security Features of Sync System:**
+- ✅ Direct file downloads from GitHub (no script execution)
+- ✅ Verification of download success before file replacement
+- ✅ Backup of existing files during updates
+- ✅ Preservation of user configuration (jstack.config)
+- ✅ Clear reporting of all changes made
+- ✅ Complete modular architecture maintained
 
-**Make Executable** (if using Method 1)
+**Make Executable** (if using alternative methods)
 ```bash
 chmod +x jstack.sh
 ```
@@ -344,6 +364,9 @@ chmod +x jstack.sh
 ```bash
 ls -la jstack.sh
 head -n 10 jstack.sh  # Check script header
+
+# If using sync system, verify all components
+./jstack.sh --sync status  # Check sync status of all files
 ```
 
 ### Step 5: Configuration Customization
@@ -2096,6 +2119,125 @@ sudo aureport --file
 ---
 
 ## Maintenance & Updates
+
+### System Updates and Sync Management
+
+The JarvisJR Stack includes a built-in sync system for secure updates while preserving your configuration and customizations.
+
+#### Updating JarvisJR Stack Components
+
+**Quick Update (Recommended)**
+```bash
+# Update all scripts and components from repository
+./jstack.sh --sync
+```
+
+This command will:
+- Download the latest versions of all managed files
+- Preserve your existing `jstack.config` file
+- Create timestamped backups of modified files
+- Report all changes made to the system
+
+**Check Update Status**
+```bash
+# View which files are managed by sync system
+./jstack.sh --sync status
+
+# View complete file manifest
+./scripts/core/sync.sh manifest
+```
+
+**Manual Sync Operations**
+```bash
+# Direct sync script usage for advanced operations
+cd /path/to/jarvisjr_stack
+
+# Update existing installation
+./scripts/core/sync.sh update
+
+# Check status of all managed files
+./scripts/core/sync.sh status
+
+# View complete file manifest
+./scripts/core/sync.sh manifest
+
+# First-time setup (for new installations)
+./scripts/core/sync.sh install
+```
+
+#### Sync System Security Features
+
+The sync system is designed with security as a primary concern:
+
+**File Integrity**
+- Direct downloads from GitHub repository
+- No remote script execution or curl | bash patterns
+- Verification of successful downloads before replacement
+- Clear reporting of all file changes
+
+**Configuration Preservation**
+- User configuration (`jstack.config`) is never overwritten
+- Custom modifications are preserved where possible
+- Automatic backup creation during updates
+
+**Rollback Capability**
+```bash
+# Find backup files created during updates
+find . -name "*.backup.*" -type f
+
+# Restore specific file from backup if needed
+cp scripts/core/setup.sh.backup.20250120_143052 scripts/core/setup.sh
+
+# View backed up files from recent update
+ls -la scripts/core/*.backup.$(date +%Y%m%d)*
+```
+
+#### Update Frequency Recommendations
+
+**Weekly Updates (Recommended)**
+```bash
+# Check for updates weekly
+./jstack.sh --sync
+```
+
+**Before Major Changes**
+```bash
+# Always update before making configuration changes
+./jstack.sh --backup pre-config-change
+./jstack.sh --sync
+```
+
+**After System Maintenance**
+```bash
+# Update after system package updates
+sudo apt update && sudo apt upgrade -y
+./jstack.sh --sync
+```
+
+#### Monitoring Sync Status
+
+**Automated Update Checking**
+
+Create a weekly cron job to check for available updates:
+
+```bash
+# Edit crontab for jarvis user
+crontab -e
+
+# Add weekly update check (Sundays at 2 AM)
+0 2 * * 0 cd /home/jarvis/jarvisjr_stack && ./jstack.sh --sync >> /home/jarvis/logs/sync_$(date +\%Y\%m\%d).log 2>&1
+```
+
+**Manual Update Verification**
+```bash
+# After running updates, verify system integrity
+./jstack.sh --dry-run
+docker ps --format 'table {{.Names}}	{{.Status}}'
+
+# Test critical services
+curl -f https://n8n.your-domain.com > /dev/null && echo "N8N: OK"
+curl -f https://supabase.your-domain.com/health > /dev/null && echo "Supabase: OK"
+```
 
 ### Regular Maintenance Procedures
 

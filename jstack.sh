@@ -202,7 +202,54 @@ show_access_information() {
     echo ""
     echo "📊 Service Status:"
     if command -v docker &>/dev/null; then
-        echo "   Containers: $(docker ps --format 'table {{.Names}}\t{{.Status}}' | grep -c 'Up' || echo '0') running"
+        echo "   Containers: $(docker ps --format 'table {{.Names}}	{{.Status}}' | grep -c 'Up' || echo '0') running"
+    fi
+    echo ""
+    echo "📝 Configuration:"
+    echo "   Base Directory: $BASE_DIR"
+    echo "   Service User: $SERVICE_USER"
+    echo "   Logs: $BASE_DIR/logs"
+    echo "   Backups: $BASE_DIR/backups"
+    echo ""
+    echo "🔧 Management Commands:"
+    echo "   Create backup: $0 --backup"
+    echo "   View logs: tail -f $BASE_DIR/logs/setup_*.log"
+    echo "   Check status: docker ps"
+}
+
+# Sync system workflows
+run_sync() {
+    log_section "Sync System Management"
+    
+    # Check if sync script exists
+    if [[ ! -f "${PROJECT_ROOT}/scripts/core/sync.sh" ]]; then
+        log_error "Sync script not found: scripts/core/sync.sh"
+        log_info "This suggests an incomplete installation"
+        return 1
+    fi
+    
+    # Execute sync with update mode (for existing installations)
+    if bash "${PROJECT_ROOT}/scripts/core/sync.sh" update; then
+        log_success "System sync completed successfully"
+    else
+        log_error "System sync failed"
+        return 1
+    fi
+}
+
+# Show access information
+show_access_information() {
+    log_section "🎉 Installation Complete - Access Information"
+    
+    echo "Your JarvisJR Stack is now running and accessible at:"
+    echo ""
+    echo "🗄️  Supabase API:     https://${SUPABASE_SUBDOMAIN}.${DOMAIN}"
+    echo "🎨  Supabase Studio:  https://${STUDIO_SUBDOMAIN}.${DOMAIN}"
+    echo "🔄  N8N Workflows:    https://${N8N_SUBDOMAIN}.${DOMAIN}"
+    echo ""
+    echo "📊 Service Status:"
+    if command -v docker &>/dev/null; then
+        echo "   Containers: $(docker ps --format 'table {{.Names}}	{{.Status}}' | grep -c 'Up' || echo '0') running"
     fi
     echo ""
     echo "📝 Configuration:"
@@ -234,6 +281,7 @@ OPTIONS:
   --backup [NAME]    Create complete system backup (optional custom name)
   --restore [FILE]   Restore from backup (interactive selection if no file)
   --list-backups     List all available backups with details
+  --sync             Update system files from repository (preserves config)
   --dry-run          Run in dry-run mode (no actual changes)
   --configure-ssl    Configure SSL certificates and start NGINX
   --add-site PATH    Add a site from specified path
@@ -250,6 +298,7 @@ EXAMPLES:
   $0 --restore       # Interactive restore selection
   $0 --restore backup_20250109_203045.tar.gz  # Restore specific backup
   $0 --list-backups  # Show all available backups
+  $0 --sync          # Update scripts from repository (preserves config)
   $0 --add-site sites/example.com    # Add a site from config
   $0 --remove-site sites/example.com # Remove a site
   $0 --dry-run       # Test run without making changes
@@ -331,6 +380,10 @@ main() {
                 ;;
             --list-backups)
                 list_backups
+                exit 0
+                ;;
+            --sync)
+                run_sync
                 exit 0
                 ;;
             --dry-run)
